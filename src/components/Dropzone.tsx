@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { extractMetadata } from "@/lib/extract-metadata";
 import { addHistoryEntry } from "@/lib/history";
+import { fileSizeBucket, fileTypeFromName, track } from "@/lib/analytics";
 import type { ExtractedMetadata } from "@/lib/types";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { useToast } from "./Toast";
@@ -36,6 +37,15 @@ export function Dropzone({ dict, emptyHero, emptyExtras }: Props) {
       try {
         const m = await extractMetadata(file);
         setResult(m);
+        track("image_parsed", {
+          platform: m.platform,
+          has_prompt: Boolean(m.parsed.prompt),
+          has_negative: Boolean(m.parsed.negativePrompt),
+          has_workflow: m.workflow !== undefined,
+          has_loras: Boolean(m.parsed.loras?.length),
+          file_type: fileTypeFromName(file.name, file.type || "image/unknown"),
+          file_size_kb_bucket: fileSizeBucket(file.size),
+        });
         if (m.platform !== "unknown" || m.rawText) addHistoryEntry(m);
       } catch (e) {
         setError(e instanceof Error ? e.message : dict.errors.readFailed);

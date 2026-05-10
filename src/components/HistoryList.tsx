@@ -10,6 +10,7 @@ import {
 } from "@/lib/history";
 import type { HistoryEntry } from "@/lib/types";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { track } from "@/lib/analytics";
 import { useToast } from "./Toast";
 import { MetadataDisplay } from "./MetadataDisplay";
 
@@ -39,7 +40,9 @@ export function HistoryList({ dict, lang }: { dict: Dictionary; lang: string }) 
   const toast = useToast();
 
   useEffect(() => {
-    setEntries(readHistory());
+    const initial = readHistory();
+    setEntries(initial);
+    track("history_opened", { entry_count: initial.length });
     const unsub = subscribeHistory(() => setEntries(readHistory()));
     return unsub;
   }, []);
@@ -89,7 +92,11 @@ export function HistoryList({ dict, lang }: { dict: Dictionary; lang: string }) 
                   {PLATFORM_BADGE[m.platform] ?? m.platform}
                 </span>
                 <button
-                  onClick={() => setOpenId(isOpen ? null : e.id)}
+                  onClick={() => {
+                    const nowOpen = !isOpen;
+                    setOpenId(nowOpen ? e.id : null);
+                    if (nowOpen) track("history_entry_loaded", { platform: m.platform });
+                  }}
                   className="flex-1 min-w-0 text-left"
                 >
                   <div className="text-sm truncate text-zinc-800 dark:text-zinc-200">

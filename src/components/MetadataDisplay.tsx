@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { ExtractedMetadata } from "@/lib/types";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { track } from "@/lib/analytics";
 
 interface Props {
   metadata: ExtractedMetadata;
@@ -22,11 +23,13 @@ function CopyIconButton({
   ariaLabel,
   toastText,
   onCopied,
+  onCopySuccess,
 }: {
   value: string;
   ariaLabel: string;
   toastText: string;
   onCopied?: (text: string) => void;
+  onCopySuccess?: () => void;
 }) {
   const [done, setDone] = useState(false);
   return (
@@ -39,6 +42,7 @@ function CopyIconButton({
           await navigator.clipboard.writeText(value);
           setDone(true);
           onCopied?.(toastText);
+          onCopySuccess?.();
           setTimeout(() => setDone(false), 1000);
         } catch {
           /* ignore */
@@ -66,19 +70,21 @@ function PromptBlock({
   value,
   dict,
   onCopied,
+  onCopyTrack,
   primary = false,
 }: {
   label: string;
   value: string;
   dict: Dictionary;
   onCopied?: (text: string) => void;
+  onCopyTrack?: () => void;
   primary?: boolean;
 }) {
   return (
     <section className="group rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
       <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/60 px-3 py-1.5">
         <span className="text-[11px] uppercase tracking-wider text-zinc-500">{label}</span>
-        <CopyIconButton value={value} ariaLabel={dict.metadata.actions.copy} toastText={dict.metadata.actions.copied} onCopied={onCopied} />
+        <CopyIconButton value={value} ariaLabel={dict.metadata.actions.copy} toastText={dict.metadata.actions.copied} onCopied={onCopied} onCopySuccess={onCopyTrack} />
       </div>
       <div
         className={`px-3 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words ${
@@ -93,12 +99,16 @@ function PromptBlock({
 
 function ParamRow({
   label,
+  field,
+  platform,
   value,
   mono = true,
   dict,
   onCopied,
 }: {
   label: string;
+  field: string;
+  platform: string;
   value: string | number | undefined;
   mono?: boolean;
   dict: Dictionary;
@@ -113,7 +123,13 @@ function ParamRow({
         {str}
       </dd>
       <div className="opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition">
-        <CopyIconButton value={str} ariaLabel={dict.metadata.actions.copy} toastText={dict.metadata.actions.copied} onCopied={onCopied} />
+        <CopyIconButton
+          value={str}
+          ariaLabel={dict.metadata.actions.copy}
+          toastText={dict.metadata.actions.copied}
+          onCopied={onCopied}
+          onCopySuccess={() => track("field_copied", { field, platform })}
+        />
       </div>
     </div>
   );
@@ -136,6 +152,7 @@ export function MetadataDisplay({ metadata, dict, onReset, onCopied }: Props) {
     try {
       await navigator.clipboard.writeText(parsed.prompt);
       onCopied?.(dict.metadata.actions.copied);
+      track("prompt_copied", { platform });
     } catch {
       /* ignore */
     }
@@ -196,26 +213,39 @@ export function MetadataDisplay({ metadata, dict, onReset, onCopied }: Props) {
       )}
 
       {parsed.prompt && (
-        <PromptBlock label={f.prompt} value={parsed.prompt} dict={dict} onCopied={onCopied} primary />
+        <PromptBlock
+          label={f.prompt}
+          value={parsed.prompt}
+          dict={dict}
+          onCopied={onCopied}
+          onCopyTrack={() => track("prompt_copied", { platform })}
+          primary
+        />
       )}
       {parsed.negativePrompt && (
-        <PromptBlock label={f.negativePrompt} value={parsed.negativePrompt} dict={dict} onCopied={onCopied} />
+        <PromptBlock
+          label={f.negativePrompt}
+          value={parsed.negativePrompt}
+          dict={dict}
+          onCopied={onCopied}
+          onCopyTrack={() => track("field_copied", { field: "negative_prompt", platform })}
+        />
       )}
 
       {hasParams && (
         <section className="rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
           <dl>
-            <ParamRow label={f.model} value={parsed.model} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.modelHash} value={parsed.modelHash} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.vae} value={parsed.vae} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.sampler} value={parsed.sampler} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.scheduler} value={parsed.scheduler} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.steps} value={parsed.steps} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.cfgScale} value={parsed.cfgScale} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.seed} value={parsed.seed} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.size} value={parsed.width && parsed.height ? `${parsed.width}×${parsed.height}` : undefined} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.clipSkip} value={parsed.clipSkip} dict={dict} onCopied={onCopied} />
-            <ParamRow label={f.denoise} value={parsed.denoisingStrength} dict={dict} onCopied={onCopied} />
+            <ParamRow field="model" platform={platform} label={f.model} value={parsed.model} dict={dict} onCopied={onCopied} />
+            <ParamRow field="model_hash" platform={platform} label={f.modelHash} value={parsed.modelHash} dict={dict} onCopied={onCopied} />
+            <ParamRow field="vae" platform={platform} label={f.vae} value={parsed.vae} dict={dict} onCopied={onCopied} />
+            <ParamRow field="sampler" platform={platform} label={f.sampler} value={parsed.sampler} dict={dict} onCopied={onCopied} />
+            <ParamRow field="scheduler" platform={platform} label={f.scheduler} value={parsed.scheduler} dict={dict} onCopied={onCopied} />
+            <ParamRow field="steps" platform={platform} label={f.steps} value={parsed.steps} dict={dict} onCopied={onCopied} />
+            <ParamRow field="cfg_scale" platform={platform} label={f.cfgScale} value={parsed.cfgScale} dict={dict} onCopied={onCopied} />
+            <ParamRow field="seed" platform={platform} label={f.seed} value={parsed.seed} dict={dict} onCopied={onCopied} />
+            <ParamRow field="size" platform={platform} label={f.size} value={parsed.width && parsed.height ? `${parsed.width}×${parsed.height}` : undefined} dict={dict} onCopied={onCopied} />
+            <ParamRow field="clip_skip" platform={platform} label={f.clipSkip} value={parsed.clipSkip} dict={dict} onCopied={onCopied} />
+            <ParamRow field="denoise" platform={platform} label={f.denoise} value={parsed.denoisingStrength} dict={dict} onCopied={onCopied} />
           </dl>
         </section>
       )}
@@ -238,7 +268,13 @@ export function MetadataDisplay({ metadata, dict, onReset, onCopied }: Props) {
       )}
 
       {parsed.embeddings && parsed.embeddings.length > 0 && (
-        <PromptBlock label={f.embeddings} value={parsed.embeddings.join(", ")} dict={dict} onCopied={onCopied} />
+        <PromptBlock
+          label={f.embeddings}
+          value={parsed.embeddings.join(", ")}
+          dict={dict}
+          onCopied={onCopied}
+          onCopyTrack={() => track("field_copied", { field: "embeddings", platform })}
+        />
       )}
 
       {parsed.extras && Object.keys(parsed.extras).length > 0 && (
@@ -248,7 +284,7 @@ export function MetadataDisplay({ metadata, dict, onReset, onCopied }: Props) {
           </summary>
           <dl className="border-t border-zinc-100 dark:border-zinc-800/60">
             {Object.entries(parsed.extras).map(([k, v]) => (
-              <ParamRow key={k} label={k} value={v} dict={dict} onCopied={onCopied} />
+              <ParamRow key={k} field={`extras:${k}`} platform={platform} label={k} value={v} dict={dict} onCopied={onCopied} />
             ))}
           </dl>
         </details>
@@ -268,6 +304,7 @@ export function MetadataDisplay({ metadata, dict, onReset, onCopied }: Props) {
                 a.download = `${fileInfo.filename.replace(/\.[^.]+$/, "")}-workflow.json`;
                 a.click();
                 URL.revokeObjectURL(url);
+                track("workflow_downloaded", { platform });
               }}
               className="rounded border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-2 py-0.5 text-[11px] normal-case tracking-normal text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
             >
@@ -283,7 +320,11 @@ export function MetadataDisplay({ metadata, dict, onReset, onCopied }: Props) {
       {rawText && (
         <details
           open={showRaw}
-          onToggle={(e) => setShowRaw((e.target as HTMLDetailsElement).open)}
+          onToggle={(e) => {
+            const open = (e.target as HTMLDetailsElement).open;
+            setShowRaw(open);
+            if (open) track("raw_metadata_opened", { platform });
+          }}
           className="rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
         >
           <summary className="cursor-pointer px-3 py-2 text-[11px] uppercase tracking-wider text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300">
