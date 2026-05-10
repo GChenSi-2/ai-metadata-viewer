@@ -1,0 +1,138 @@
+{
+  "site": {
+    "title": "AI 图片元数据查看器",
+    "tagline": "拖入 Stable Diffusion、ComfyUI、NovelAI 或 Midjourney 生成的 PNG / JPEG,立刻读出 prompt、模型、采样器、随机种子等参数。",
+    "footer": "所有解析都在你的浏览器本地完成,不会上传图片,也不记录文件内容。"
+  },
+  "nav": {
+    "history": "历史记录",
+    "back": "← 返回解析"
+  },
+  "dropzone": {
+    "active": "把图片放进来…",
+    "idle": "拖入 AI 图片,或点击选择文件",
+    "formats": "PNG · JPEG · WebP — Stable Diffusion / ComfyUI / NovelAI / Midjourney",
+    "privacy": "🔒 100% 本地解析,图片不会离开你的浏览器。",
+    "reading": "正在读取元数据…"
+  },
+  "metadata": {
+    "platform": "识别到的平台",
+    "noMetadata": "这张图里没找到 AI 元数据。可能被另存为 / 二次保存清掉了,或者来源工具不写入元数据。",
+    "fields": {
+      "prompt": "Prompt",
+      "negativePrompt": "Negative prompt",
+      "model": "模型",
+      "modelHash": "模型 hash",
+      "vae": "VAE",
+      "sampler": "采样器",
+      "scheduler": "调度器",
+      "steps": "步数",
+      "cfgScale": "CFG scale",
+      "seed": "随机种子",
+      "size": "尺寸",
+      "clipSkip": "Clip skip",
+      "denoise": "去噪强度",
+      "loras": "LoRA",
+      "embeddings": "Embeddings",
+      "extras": "其它字段",
+      "workflow": "ComfyUI 工作流 JSON"
+    },
+    "actions": {
+      "copy": "复制",
+      "copied": "✓ 已复制",
+      "download": "下载",
+      "showRaw": "显示原始元数据",
+      "hideRaw": "隐藏原始元数据"
+    }
+  },
+  "history": {
+    "title": "历史记录",
+    "subtitle": "仅保存在你的浏览器本地——清除站点数据后会全部消失。",
+    "empty": "还没有历史记录。",
+    "emptyCta": "← 拖一张图开始",
+    "loading": "加载中…",
+    "count": "共 {count} 条(本地保存,最多 20 条)",
+    "countOne": "共 {count} 条(本地保存,最多 20 条)",
+    "clearAll": "清空全部",
+    "confirmClear": "确认清空所有历史?该操作无法撤销。",
+    "delete": "删除",
+    "noPrompt": "(无 prompt)"
+  },
+  "platforms": {
+    "automatic1111": "Stable Diffusion (AUTOMATIC1111 / Forge)",
+    "comfyui": "ComfyUI",
+    "novelai": "NovelAI",
+    "midjourney": "Midjourney",
+    "invokeai": "InvokeAI",
+    "fooocus": "Fooocus",
+    "unknown": "未知 / 无元数据"
+  },
+  "errors": {
+    "readFailed": "读取文件失败"
+  },
+  "landing": {
+    "automatic1111-metadata-viewer": {
+      "h1": "AUTOMATIC1111 / Forge 元数据查看器",
+      "intro": "读取 AUTOMATIC1111 / Forge 写入 PNG tEXt(键名 \"parameters\")的 prompt、negative prompt、采样器、随机种子、模型 hash、LoRA 等所有参数。拖入图片即可在本地查看。",
+      "fieldsTitle": "可以提取的字段",
+      "fields": [
+        "正向 / 负向 prompt(LoRA、embedding token 自动识别)",
+        "采样器、调度器、步数、CFG scale、去噪强度",
+        "随机种子、图像尺寸、Clip skip",
+        "模型名 + 模型 hash、VAE",
+        "WebUI 写入的其它字段(原样保留)"
+      ],
+      "faqTitle": "常见问题",
+      "faq": [
+        {
+          "q": "为什么我的图没有元数据?",
+          "a": "在 Photoshop、在线压缩工具或社交平台上另存的 PNG 会被剥掉 tEXt chunk。只有 WebUI 直接生成的原始文件才保留这些数据。"
+        },
+        {
+          "q": "图片会被上传吗?",
+          "a": "不会。解析完全在浏览器里用纯 JS 实现的 PNG chunk reader 完成。"
+        }
+      ]
+    },
+    "comfyui-workflow-extractor": {
+      "h1": "ComfyUI 工作流提取器",
+      "intro": "从 ComfyUI 导出的 PNG 中提取完整的工作流 JSON,同时给出模型、采样器、随机种子、prompt、LoRA 的扁平摘要。拖入图片即可在本地解析。",
+      "fieldsTitle": "可以提取的字段",
+      "fields": [
+        "编辑器工作流 JSON(含节点位置)——一键下载",
+        "可执行 prompt 图——模型、采样器、prompt、LoRA 链",
+        "通过 KSampler 接线推断正向 / 负向 prompt",
+        "从 EmptyLatentImage / EmptySD3LatentImage 读取图像尺寸"
+      ],
+      "faqTitle": "常见问题",
+      "faq": [
+        {
+          "q": "下载的 JSON 能直接拖回 ComfyUI 吗?",
+          "a": "可以。下载的就是 ComfyUI 自己保存的那份 JSON,拖到 ComfyUI 画布上即可加载。"
+        },
+        {
+          "q": "SDXL / Flux 自定义节点的字段为什么没识别?",
+          "a": "自定义节点的输入名各异,目前只解析最常见的几类(KSampler、CheckpointLoaderSimple、LoraLoader 等)。"
+        }
+      ]
+    },
+    "novelai-prompt-extractor": {
+      "h1": "NovelAI Prompt 提取器",
+      "intro": "读取 NovelAI 写入 PNG tEXt(Description / Comment / Software)的 prompt、uc(负面词)、采样器、随机种子等参数。拖入 NovelAI 图片即可。",
+      "fieldsTitle": "可以提取的字段",
+      "fields": [
+        "Prompt(来自 Description chunk)",
+        "负面 prompt / uc(来自 Comment JSON)",
+        "Steps、scale(CFG)、seed、采样器、noise schedule",
+        "图像尺寸,以及 Comment 中的其它字段作为 extras 保留"
+      ],
+      "faqTitle": "常见问题",
+      "faq": [
+        {
+          "q": "如果图被剥掉元数据了怎么办?",
+          "a": "NovelAI 自己提供的下载会保留元数据。通过 Discord / Twitter 转发通常会被剥掉。"
+        }
+      ]
+    }
+  }
+}

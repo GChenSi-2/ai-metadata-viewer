@@ -1,0 +1,138 @@
+{
+  "site": {
+    "title": "AI 画像メタデータビューア",
+    "tagline": "Stable Diffusion・ComfyUI・NovelAI・Midjourney で生成された PNG / JPEG をドロップすると、prompt・モデル・サンプラー・seed などをその場で読み取ります。",
+    "footer": "すべての解析はブラウザ内で完結します。アップロードもファイル内容のトラッキングも行いません。"
+  },
+  "nav": {
+    "history": "履歴",
+    "back": "← 解析画面に戻る"
+  },
+  "dropzone": {
+    "active": "ここにドロップ…",
+    "idle": "AI 画像をドラッグ、またはクリックして選択",
+    "formats": "PNG · JPEG · WebP — Stable Diffusion / ComfyUI / NovelAI / Midjourney",
+    "privacy": "🔒 完全にクライアント側で処理。画像はブラウザの外に出ません。",
+    "reading": "メタデータを読み取り中…"
+  },
+  "metadata": {
+    "platform": "検出されたプラットフォーム",
+    "noMetadata": "この画像に AI メタデータは見つかりませんでした。再保存により失われたか、メタデータを埋め込まないツールで生成された可能性があります。",
+    "fields": {
+      "prompt": "Prompt",
+      "negativePrompt": "Negative prompt",
+      "model": "モデル",
+      "modelHash": "モデル hash",
+      "vae": "VAE",
+      "sampler": "サンプラー",
+      "scheduler": "スケジューラー",
+      "steps": "ステップ数",
+      "cfgScale": "CFG scale",
+      "seed": "シード",
+      "size": "サイズ",
+      "clipSkip": "Clip skip",
+      "denoise": "デノイズ",
+      "loras": "LoRA",
+      "embeddings": "Embeddings",
+      "extras": "その他のフィールド",
+      "workflow": "ComfyUI ワークフロー JSON"
+    },
+    "actions": {
+      "copy": "コピー",
+      "copied": "✓ コピーしました",
+      "download": "ダウンロード",
+      "showRaw": "生メタデータを表示",
+      "hideRaw": "生メタデータを隠す"
+    }
+  },
+  "history": {
+    "title": "履歴",
+    "subtitle": "ブラウザ内にのみ保存されます。サイトデータを消去すると履歴も削除されます。",
+    "empty": "履歴はまだありません。",
+    "emptyCta": "← 画像をドロップして始める",
+    "loading": "読み込み中…",
+    "count": "{count} 件(ローカル保存・最大 20 件)",
+    "countOne": "{count} 件(ローカル保存・最大 20 件)",
+    "clearAll": "すべて削除",
+    "confirmClear": "履歴をすべて削除しますか?この操作は取り消せません。",
+    "delete": "削除",
+    "noPrompt": "(prompt なし)"
+  },
+  "platforms": {
+    "automatic1111": "Stable Diffusion (AUTOMATIC1111 / Forge)",
+    "comfyui": "ComfyUI",
+    "novelai": "NovelAI",
+    "midjourney": "Midjourney",
+    "invokeai": "InvokeAI",
+    "fooocus": "Fooocus",
+    "unknown": "不明 / メタデータなし"
+  },
+  "errors": {
+    "readFailed": "ファイルの読み込みに失敗しました"
+  },
+  "landing": {
+    "automatic1111-metadata-viewer": {
+      "h1": "AUTOMATIC1111 / Forge メタデータビューア",
+      "intro": "AUTOMATIC1111 / Forge が PNG tEXt チャンク(キー名 \"parameters\")に埋め込む prompt・negative prompt・サンプラー・シード・モデル hash・LoRA などをすべて読み取ります。画像をドロップすればローカルで解析されます。",
+      "fieldsTitle": "抽出できるフィールド",
+      "fields": [
+        "正・負 prompt(LoRA / embedding トークンも自動認識)",
+        "サンプラー、スケジューラー、ステップ数、CFG scale、デノイズ強度",
+        "シード、画像サイズ、Clip skip",
+        "モデル名・モデル hash、VAE",
+        "WebUI が書き込んだその他のフィールド(原文のまま保持)"
+      ],
+      "faqTitle": "FAQ",
+      "faq": [
+        {
+          "q": "画像にメタデータが入っていないのはなぜ?",
+          "a": "Photoshop やオンライン圧縮ツール、SNS 経由で再保存された PNG は tEXt チャンクが除去されます。WebUI が直接出力したオリジナルだけがメタデータを保持します。"
+        },
+        {
+          "q": "画像はアップロードされる?",
+          "a": "いいえ。解析はピュア JavaScript の PNG チャンクリーダーで完全にブラウザ内で行われます。"
+        }
+      ]
+    },
+    "comfyui-workflow-extractor": {
+      "h1": "ComfyUI ワークフロー抽出ツール",
+      "intro": "ComfyUI が出力した PNG から完全なワークフロー JSON を取り出し、モデル・サンプラー・シード・prompt・LoRA をフラットにまとめて表示します。ComfyUI 画像をドロップしてください。",
+      "fieldsTitle": "抽出できるフィールド",
+      "fields": [
+        "エディター用ワークフロー JSON(ノード位置含む)——ワンクリックでダウンロード",
+        "実行用 prompt グラフ——モデル・サンプラー・prompt・LoRA チェーン",
+        "KSampler の配線から正 / 負 prompt を推定",
+        "EmptyLatentImage / EmptySD3LatentImage から画像サイズを取得"
+      ],
+      "faqTitle": "FAQ",
+      "faq": [
+        {
+          "q": "ダウンロードした JSON はそのまま ComfyUI に読み込める?",
+          "a": "はい。ComfyUI が保存するものと同じ形式なので、ComfyUI のキャンバスにドラッグすれば読み込めます。"
+        },
+        {
+          "q": "SDXL / Flux のカスタムノードでフィールドが取れないのはなぜ?",
+          "a": "カスタムノードは入力名が独自のため、もっとも一般的なもの(KSampler、CheckpointLoaderSimple、LoraLoader など)のみ解釈しています。"
+        }
+      ]
+    },
+    "novelai-prompt-extractor": {
+      "h1": "NovelAI Prompt 抽出ツール",
+      "intro": "NovelAI が PNG tEXt(Description / Comment / Software)に書き込む prompt、uc(ネガティブ)、サンプラー、シードなどを読み取ります。NovelAI の画像をドロップしてください。",
+      "fieldsTitle": "抽出できるフィールド",
+      "fields": [
+        "Prompt(Description チャンクより)",
+        "ネガティブ prompt / uc(Comment JSON より)",
+        "Steps、scale(CFG)、seed、サンプラー、noise schedule",
+        "画像サイズと Comment 内のその他フィールド(extras として保持)"
+      ],
+      "faqTitle": "FAQ",
+      "faq": [
+        {
+          "q": "メタデータが取り除かれてしまった画像は?",
+          "a": "NovelAI 自身のダウンロードはメタデータを保持します。Discord や Twitter を経由すると失われることが多いです。"
+        }
+      ]
+    }
+  }
+}
