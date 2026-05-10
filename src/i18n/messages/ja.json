@@ -1,19 +1,22 @@
 {
   "site": {
     "title": "AI 画像メタデータビューア",
+    "short": "メタデータ",
     "tagline": "Stable Diffusion・ComfyUI・NovelAI・Midjourney で生成された PNG / JPEG をドロップすると、prompt・モデル・サンプラー・seed などをその場で読み取ります。",
     "footer": "すべての解析はブラウザ内で完結します。アップロードもファイル内容のトラッキングも行いません。"
   },
   "nav": {
     "history": "履歴",
-    "back": "← 解析画面に戻る"
+    "back": "← 戻る"
   },
   "dropzone": {
-    "active": "ここにドロップ…",
-    "idle": "AI 画像をドラッグ、またはクリックして選択",
-    "formats": "PNG · JPEG · WebP — Stable Diffusion / ComfyUI / NovelAI / Midjourney",
-    "privacy": "🔒 完全にクライアント側で処理。画像はブラウザの外に出ません。",
-    "reading": "メタデータを読み取り中…"
+    "active": "ドロップで読み取り",
+    "idle": "画像をドロップまたは貼り付け",
+    "compact": "次の画像をドロップまたは貼り付け",
+    "hint": "PNG · JPEG · WebP · ⌘V で貼り付け · Esc でクリア",
+    "reading": "読み取り中…",
+    "privacy": "完全クライアント処理",
+    "formats": "PNG · JPEG · WebP — Stable Diffusion / ComfyUI / NovelAI / Midjourney"
   },
   "metadata": {
     "platform": "検出されたプラットフォーム",
@@ -39,10 +42,12 @@
     },
     "actions": {
       "copy": "コピー",
-      "copied": "✓ コピーしました",
+      "copied": "コピー済み",
+      "copyPrompt": "Prompt をコピー",
+      "clear": "クリア",
       "download": "ダウンロード",
-      "showRaw": "生メタデータを表示",
-      "hideRaw": "生メタデータを隠す"
+      "showRaw": "生データ",
+      "hideRaw": "生データ"
     }
   },
   "history": {

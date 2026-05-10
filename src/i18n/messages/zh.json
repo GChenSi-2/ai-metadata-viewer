@@ -1,19 +1,22 @@
 {
   "site": {
     "title": "AI 图片元数据查看器",
+    "short": "元数据",
     "tagline": "拖入 Stable Diffusion、ComfyUI、NovelAI 或 Midjourney 生成的 PNG / JPEG,立刻读出 prompt、模型、采样器、随机种子等参数。",
     "footer": "所有解析都在你的浏览器本地完成,不会上传图片,也不记录文件内容。"
   },
   "nav": {
-    "history": "历史记录",
-    "back": "← 返回解析"
+    "history": "历史",
+    "back": "← 返回"
   },
   "dropzone": {
-    "active": "把图片放进来…",
-    "idle": "拖入 AI 图片,或点击选择文件",
-    "formats": "PNG · JPEG · WebP — Stable Diffusion / ComfyUI / NovelAI / Midjourney",
-    "privacy": "🔒 100% 本地解析,图片不会离开你的浏览器。",
-    "reading": "正在读取元数据…"
+    "active": "松开以读取",
+    "idle": "拖入或粘贴图片",
+    "compact": "拖入或粘贴下一张",
+    "hint": "PNG · JPEG · WebP · ⌘V 粘贴 · Esc 清空",
+    "reading": "读取中…",
+    "privacy": "100% 本地解析",
+    "formats": "PNG · JPEG · WebP — Stable Diffusion / ComfyUI / NovelAI / Midjourney"
   },
   "metadata": {
     "platform": "识别到的平台",
@@ -39,10 +42,12 @@
     },
     "actions": {
       "copy": "复制",
-      "copied": "✓ 已复制",
+      "copied": "已复制",
+      "copyPrompt": "复制 Prompt",
+      "clear": "清空",
       "download": "下载",
-      "showRaw": "显示原始元数据",
-      "hideRaw": "隐藏原始元数据"
+      "showRaw": "原始数据",
+      "hideRaw": "原始数据"
     }
   },
   "history": {

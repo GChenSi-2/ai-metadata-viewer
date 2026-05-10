@@ -1,8 +1,8 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HistoryList } from "@/components/HistoryList";
-import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { TopBar } from "@/components/TopBar";
 import { isLocale, LOCALES, LOCALE_HTML_LANG } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -27,28 +27,28 @@ export default async function HistoryPage({ params }: { params: Promise<{ lang: 
   const dict = await getDictionary(lang);
 
   return (
-    <main className="min-h-screen bg-zinc-50 dark:bg-black px-4 py-12 sm:py-16">
-      <div className="max-w-4xl mx-auto">
-        <nav className="flex items-center justify-between mb-6">
-          <LocaleSwitcher current={lang} />
-        </nav>
-        <header className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 dark:text-zinc-50">
-              {dict.history.title}
-            </h1>
-            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">{dict.history.subtitle}</p>
-          </div>
+    <>
+      <TopBar
+        lang={lang}
+        dict={dict}
+        rightSlot={
           <Link
             href={`/${lang}`}
-            className="text-sm text-blue-600 hover:underline shrink-0"
+            className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
           >
             {dict.nav.back}
           </Link>
-        </header>
-
+        }
+      />
+      <main className="flex-1 w-full max-w-3xl mx-auto px-4 py-6 sm:py-8">
+        <div className="mb-4">
+          <h1 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
+            {dict.history.title}
+          </h1>
+          <p className="text-xs text-zinc-500 mt-0.5">{dict.history.subtitle}</p>
+        </div>
         <HistoryList dict={dict} lang={lang} />
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
