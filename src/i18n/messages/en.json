@@ -75,6 +75,24 @@
   "errors": {
     "readFailed": "Failed to read file"
   },
+  "hero": {
+    "headlinePre": "See what's inside any",
+    "headlineAccent": "AI image",
+    "tagline": "Read the prompt, model, sampler, seed, LoRAs and ComfyUI workflow embedded in PNGs and JPEGs from Stable Diffusion, ComfyUI, NovelAI, and Midjourney — entirely in your browser.",
+    "supports": "Works with",
+    "platforms": {
+      "automatic1111": "SD WebUI",
+      "comfyui": "ComfyUI",
+      "novelai": "NovelAI",
+      "midjourney": "Midjourney"
+    },
+    "previewTitle": "What you'll get",
+    "preview": [
+      { "title": "Prompts", "body": "Positive, negative, with LoRAs and embeddings detected." },
+      { "title": "Parameters", "body": "Model, sampler, seed, steps, CFG, size — copy any field." },
+      { "title": "Workflow", "body": "ComfyUI: download the full executable workflow JSON." }
+    ]
+  },
   "landing": {
     "automatic1111-metadata-viewer": {
       "h1": "AUTOMATIC1111 / Forge Metadata Viewer",

@@ -75,6 +75,25 @@
   "errors": {
     "readFailed": "ファイルの読み込みに失敗しました"
   },
+  "hero": {
+    "headlinePre": "あらゆる",
+    "headlineAccent": "AI 画像",
+    "headlinePost": "の中身を覗く",
+    "tagline": "Stable Diffusion・ComfyUI・NovelAI・Midjourney が生成した PNG / JPEG から prompt、モデル、サンプラー、シード、LoRA、ComfyUI ワークフローを読み取ります。すべてブラウザ内で完結。",
+    "supports": "対応",
+    "platforms": {
+      "automatic1111": "SD WebUI",
+      "comfyui": "ComfyUI",
+      "novelai": "NovelAI",
+      "midjourney": "Midjourney"
+    },
+    "previewTitle": "得られる情報",
+    "preview": [
+      { "title": "Prompt", "body": "正・負、LoRA と embedding を自動検出。" },
+      { "title": "パラメータ", "body": "モデル・サンプラー・シード・steps・CFG・サイズをフィールド単位でコピー。" },
+      { "title": "ワークフロー", "body": "ComfyUI: 実行可能なワークフロー JSON をダウンロード。" }
+    ]
+  },
   "landing": {
     "automatic1111-metadata-viewer": {
       "h1": "AUTOMATIC1111 / Forge メタデータビューア",

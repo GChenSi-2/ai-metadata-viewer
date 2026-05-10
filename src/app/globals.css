@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf9;
+  --foreground: #0a0a0a;
+  --accent-from: #2563eb;
+  --accent-via: #7c3aed;
+  --accent-to: #db2777;
 }
 
 @theme inline {
@@ -14,28 +17,104 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #07070a;
+    --foreground: #fafafa;
+    --accent-from: #60a5fa;
+    --accent-via: #a78bfa;
+    --accent-to: #f472b6;
   }
 }
 
-body {
+html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+body {
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+}
+
+/* Decorative ambient mesh — fixed, doesn't scroll, very low intensity */
+.bg-mesh::before {
+  content: "";
+  position: fixed;
+  inset: -20% -10% auto auto;
+  height: 60vh;
+  width: 70vw;
+  background:
+    radial-gradient(closest-side, color-mix(in oklab, var(--accent-from) 35%, transparent), transparent 70%),
+    radial-gradient(closest-side at 70% 60%, color-mix(in oklab, var(--accent-via) 30%, transparent), transparent 65%),
+    radial-gradient(closest-side at 30% 80%, color-mix(in oklab, var(--accent-to) 28%, transparent), transparent 60%);
+  filter: blur(64px);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: -1;
+}
+@media (prefers-color-scheme: dark) {
+  .bg-mesh::before { opacity: 0.32; }
+}
+
+/* Gradient text — headline accent */
+.gradient-text {
+  background: linear-gradient(
+    100deg,
+    var(--accent-from) 0%,
+    var(--accent-via) 55%,
+    var(--accent-to) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Animated gradient ring — subtle accent for the dropzone */
+@keyframes ring-spin {
+  to { transform: rotate(1turn); }
+}
+.gradient-ring {
+  position: relative;
+  isolation: isolate;
+  border-radius: 14px;
+}
+.gradient-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 0deg,
+    var(--accent-from),
+    var(--accent-via),
+    var(--accent-to),
+    var(--accent-from)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0.65;
+  animation: ring-spin 12s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+.gradient-ring:hover::before { opacity: 0.95; }
+
+/* Toast pop-in */
 @keyframes toast-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.toast-in { animation: toast-in 150ms ease-out; }
 
-.toast-in {
-  animation: toast-in 150ms ease-out;
+/* Quiet but visible focus ring */
+:focus-visible {
+  outline: 2px solid var(--accent-from);
+  outline-offset: 2px;
 }
 
-/* Make focus rings visible but quiet */
-:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
+@media (prefers-reduced-motion: reduce) {
+  .gradient-ring::before { animation: none; }
 }

@@ -75,6 +75,25 @@
   "errors": {
     "readFailed": "读取文件失败"
   },
+  "hero": {
+    "headlinePre": "看见任何",
+    "headlineAccent": "AI 图片",
+    "headlinePost": "背后的细节",
+    "tagline": "从 Stable Diffusion、ComfyUI、NovelAI、Midjourney 生成的 PNG / JPEG 中读出 prompt、模型、采样器、随机种子、LoRA 和 ComfyUI 工作流——全部在你的浏览器本地完成。",
+    "supports": "支持",
+    "platforms": {
+      "automatic1111": "SD WebUI",
+      "comfyui": "ComfyUI",
+      "novelai": "NovelAI",
+      "midjourney": "Midjourney"
+    },
+    "previewTitle": "你会看到",
+    "preview": [
+      { "title": "Prompt", "body": "正向、负向,自动识别 LoRA 和 embedding。" },
+      { "title": "参数", "body": "模型、采样器、随机种子、步数、CFG、尺寸——逐字段复制。" },
+      { "title": "工作流", "body": "ComfyUI:一键下载完整的可执行 workflow JSON。" }
+    ]
+  },
   "landing": {
     "automatic1111-metadata-viewer": {
       "h1": "AUTOMATIC1111 / Forge 元数据查看器",
