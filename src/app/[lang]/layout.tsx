@@ -40,6 +40,9 @@ export async function generateMetadata(
       type: "website",
     },
     twitter: { card: "summary_large_image" },
+    verification: {
+      google: "tUeYPcSZVhoTqdqHObsAbTfnmH6YDyRNG6tSw9yhB3s",
+    },
   };
 }
 
