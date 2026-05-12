@@ -2,7 +2,7 @@
 
 A small client-side web tool that reads the prompt, model, sampler, seed, LoRAs and ComfyUI workflow embedded in AI-generated images. Drop a PNG or JPEG made by Stable Diffusion (AUTOMATIC1111 / Forge), ComfyUI, NovelAI, or Midjourney — everything is parsed locally in your browser. No upload, no server, no account.
 
-> **Live**: <https://YOUR-VERCEL-URL.vercel.app> &nbsp;·&nbsp; **Source**: this repo
+> **Live**: <https://ai-metadata-viewer-theta.vercel.app> &nbsp;·&nbsp; **Source**: this repo
 
 ## Why
 
