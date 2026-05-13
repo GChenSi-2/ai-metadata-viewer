@@ -11,8 +11,8 @@
   },
   "dropzone": {
     "active": "Drop to read",
-    "idle": "Drop or paste an image",
-    "compact": "Drop or paste another",
+    "idle": "Drop or paste images",
+    "compact": "Drop or paste more",
     "hint": "PNG · JPEG · WebP · ⌘V to paste · Esc to clear",
     "reading": "Reading…",
     "privacy": "100% client-side",
@@ -97,7 +97,8 @@
     "preview": [
       { "title": "Prompts", "body": "Positive, negative, with LoRAs and embeddings detected." },
       { "title": "Parameters", "body": "Model, sampler, seed, steps, CFG, size — copy any field." },
-      { "title": "Workflow", "body": "ComfyUI: download the full executable workflow JSON." }
+      { "title": "Workflow", "body": "ComfyUI: download the full executable workflow JSON." },
+      { "title": "Bulk", "body": "Drop up to 100 images at once · copy all prompts · export CSV." }
     ]
   },
   "landing": {

@@ -12,7 +12,7 @@
   "dropzone": {
     "active": "松开以读取",
     "idle": "拖入或粘贴图片",
-    "compact": "拖入或粘贴下一张",
+    "compact": "继续拖入或粘贴(可多张)",
     "hint": "PNG · JPEG · WebP · ⌘V 粘贴 · Esc 清空",
     "reading": "读取中…",
     "privacy": "100% 本地解析",
@@ -98,7 +98,8 @@
     "preview": [
       { "title": "Prompt", "body": "正向、负向,自动识别 LoRA 和 embedding。" },
       { "title": "参数", "body": "模型、采样器、随机种子、步数、CFG、尺寸——逐字段复制。" },
-      { "title": "工作流", "body": "ComfyUI:一键下载完整的可执行 workflow JSON。" }
+      { "title": "工作流", "body": "ComfyUI:一键下载完整的可执行 workflow JSON。" },
+      { "title": "批量", "body": "一次最多 100 张 · 一键复制全部 prompt · 导出 CSV。" }
     ]
   },
   "landing": {

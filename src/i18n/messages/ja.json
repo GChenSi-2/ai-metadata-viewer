@@ -12,7 +12,7 @@
   "dropzone": {
     "active": "ドロップで読み取り",
     "idle": "画像をドロップまたは貼り付け",
-    "compact": "次の画像をドロップまたは貼り付け",
+    "compact": "続けてドロップまたは貼り付け(複数可)",
     "hint": "PNG · JPEG · WebP · ⌘V で貼り付け · Esc でクリア",
     "reading": "読み取り中…",
     "privacy": "完全クライアント処理",
@@ -98,7 +98,8 @@
     "preview": [
       { "title": "Prompt", "body": "正・負、LoRA と embedding を自動検出。" },
       { "title": "パラメータ", "body": "モデル・サンプラー・シード・steps・CFG・サイズをフィールド単位でコピー。" },
-      { "title": "ワークフロー", "body": "ComfyUI: 実行可能なワークフロー JSON をダウンロード。" }
+      { "title": "ワークフロー", "body": "ComfyUI: 実行可能なワークフロー JSON をダウンロード。" },
+      { "title": "一括処理", "body": "最大 100 枚を一度に · 全 prompt をコピー · CSV 出力。" }
     ]
   },
   "landing": {

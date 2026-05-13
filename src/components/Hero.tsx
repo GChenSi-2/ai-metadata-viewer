@@ -29,6 +29,11 @@ const PREVIEW_ICONS: React.ReactNode[] = [
     <rect x="3" y="4" width="6" height="6" rx="1.2" /><rect x="15" y="4" width="6" height="6" rx="1.2" /><rect x="9" y="14" width="6" height="6" rx="1.2" />
     <path d="M9 7h6M6 10v3a1 1 0 0 0 1 1h2m9-4v3a1 1 0 0 1-1 1h-2" />
   </svg>,
+  // Bulk — stacked sheets
+  <svg key="3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-4 w-4">
+    <rect x="7" y="3" width="13" height="13" rx="1.5" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M5 7v12a2 2 0 0 0 2 2h12" />
+  </svg>,
 ];
 
 export function Hero({ dict, lang }: { dict: Dictionary; lang: Locale }) {
@@ -76,7 +81,7 @@ export function HeroPreviewCards({ dict }: { dict: Dictionary }) {
       <h2 className="text-[11px] uppercase tracking-wider text-zinc-500 mb-3">
         {dict.hero.previewTitle}
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {dict.hero.preview.map((p, i) => (
           <div
             key={p.title}
