@@ -10,6 +10,8 @@ interface Props {
   dict: Dictionary;
   onReset?: () => void;
   onCopied?: (text: string) => void;
+  /** Hide the top header (filename/platform/Copy-prompt/Clear). Used inside bulk results rows. */
+  compact?: boolean;
 }
 
 function formatBytes(bytes: number): string {
@@ -135,7 +137,7 @@ function ParamRow({
   );
 }
 
-export function MetadataDisplay({ metadata, dict, onReset, onCopied }: Props) {
+export function MetadataDisplay({ metadata, dict, onReset, onCopied, compact = false }: Props) {
   const { platform, parsed, fileInfo, rawText, workflow } = metadata;
   const [showRaw, setShowRaw] = useState(false);
   const f = dict.metadata.fields;
@@ -173,38 +175,40 @@ export function MetadataDisplay({ metadata, dict, onReset, onCopied }: Props) {
 
   return (
     <div className="space-y-4">
-      {/* Result header */}
-      <div className="flex flex-wrap items-center gap-3 justify-between">
-        <div className="flex items-center gap-2 min-w-0">
-          <span className="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 text-[11px] font-medium text-zinc-700 dark:text-zinc-300">
-            {platformLabel}
-          </span>
-          <span className="truncate text-sm text-zinc-700 dark:text-zinc-300" title={fileInfo.filename}>
-            {fileInfo.filename}
-          </span>
-          <span className="text-xs text-zinc-400 whitespace-nowrap">
-            · {sizeText} · {formatBytes(fileInfo.size)}
-          </span>
+      {/* Result header — hidden in compact mode (bulk rows show their own header) */}
+      {!compact && (
+        <div className="flex flex-wrap items-center gap-3 justify-between">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="inline-flex items-center rounded-full border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 text-[11px] font-medium text-zinc-700 dark:text-zinc-300">
+              {platformLabel}
+            </span>
+            <span className="truncate text-sm text-zinc-700 dark:text-zinc-300" title={fileInfo.filename}>
+              {fileInfo.filename}
+            </span>
+            <span className="text-xs text-zinc-400 whitespace-nowrap">
+              · {sizeText} · {formatBytes(fileInfo.size)}
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            {parsed.prompt && (
+              <button
+                onClick={copyPrompt}
+                className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 active:bg-blue-800 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+              >
+                {dict.metadata.actions.copyPrompt}
+              </button>
+            )}
+            {onReset && (
+              <button
+                onClick={onReset}
+                className="rounded-md border border-zinc-200 dark:border-zinc-800 px-3 py-1.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
+              >
+                {dict.metadata.actions.clear}
+              </button>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          {parsed.prompt && (
-            <button
-              onClick={copyPrompt}
-              className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 active:bg-blue-800 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
-            >
-              {dict.metadata.actions.copyPrompt}
-            </button>
-          )}
-          {onReset && (
-            <button
-              onClick={onReset}
-              className="rounded-md border border-zinc-200 dark:border-zinc-800 px-3 py-1.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition"
-            >
-              {dict.metadata.actions.clear}
-            </button>
-          )}
-        </div>
-      </div>
+      )}
 
       {isUnknown && !rawText && (
         <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-200">

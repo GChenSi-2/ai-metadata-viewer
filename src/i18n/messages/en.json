@@ -75,6 +75,13 @@
   "errors": {
     "readFailed": "Failed to read file"
   },
+  "bulk": {
+    "progress": "Reading {done} of {total}…",
+    "summary": "{total} images · {withMetadata} with metadata · {failed} failed",
+    "copyAllPrompts": "Copy all prompts",
+    "exportCsv": "Export CSV",
+    "tooMany": "Too many files — only the first {max} were read."
+  },
   "hero": {
     "headlinePre": "See what's inside any",
     "headlineAccent": "AI image",

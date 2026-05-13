@@ -75,6 +75,13 @@
   "errors": {
     "readFailed": "ファイルの読み込みに失敗しました"
   },
+  "bulk": {
+    "progress": "{done} / {total} 件を処理中…",
+    "summary": "合計 {total} 件 · メタデータあり {withMetadata} 件 · 失敗 {failed} 件",
+    "copyAllPrompts": "全 Prompt をコピー",
+    "exportCsv": "CSV 出力",
+    "tooMany": "ファイル数が多すぎます — 先頭 {max} 件のみ処理しました。"
+  },
   "hero": {
     "headlinePre": "あらゆる",
     "headlineAccent": "AI 画像",

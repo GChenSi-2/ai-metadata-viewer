@@ -75,6 +75,13 @@
   "errors": {
     "readFailed": "读取文件失败"
   },
+  "bulk": {
+    "progress": "正在读取 {done} / {total}…",
+    "summary": "共 {total} 张 · {withMetadata} 张有元数据 · {failed} 张失败",
+    "copyAllPrompts": "复制全部 Prompt",
+    "exportCsv": "导出 CSV",
+    "tooMany": "文件过多——只读取了前 {max} 张。"
+  },
   "hero": {
     "headlinePre": "看见任何",
     "headlineAccent": "AI 图片",

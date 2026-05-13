@@ -20,6 +20,9 @@ type EventProps = {
   history_opened: { entry_count: number };
   history_entry_loaded: { platform: string };
   history_cleared: Record<string, never>;
+  bulk_parsed: { file_count: number; success_count: number; failed_count: number; duration_ms_bucket: string };
+  bulk_copy_all_prompts: { count: number };
+  bulk_export_csv: { count: number };
 };
 
 const ENABLED =
@@ -40,6 +43,14 @@ export function fileSizeBucket(bytes: number): string {
   if (kb < 500) return "100-500";
   if (kb < 2000) return "500-2000";
   return ">2000";
+}
+
+export function durationBucket(ms: number): string {
+  if (ms < 500) return "<500ms";
+  if (ms < 2000) return "500-2000ms";
+  if (ms < 5000) return "2-5s";
+  if (ms < 15000) return "5-15s";
+  return ">15s";
 }
 
 export function fileTypeFromName(name: string, fallback: string): string {
