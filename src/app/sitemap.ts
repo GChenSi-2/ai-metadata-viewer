@@ -1,28 +1,24 @@
 import type { MetadataRoute } from "next";
-import { LOCALES, LOCALE_HTML_LANG } from "@/i18n/config";
+import { LOCALES } from "@/i18n/config";
 import { PLATFORM_LANDINGS, SITE_URL } from "@/lib/seo/site";
 
-type Sitemap = MetadataRoute.Sitemap;
-
-export default function sitemap(): Sitemap {
+// Minimal sitemap: <loc> + <lastmod> only.
+// Google ignores <changefreq> and <priority>, and we already declare
+// hreflang alternates in each page's <head>, so the sitemap doesn't need
+// the xhtml:link decoration. See docs/sitemap.full-with-hreflang.ts.txt
+// for the richer variant if you ever want it back.
+export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const out: Sitemap = [];
-
   const paths = ["", "/history", ...PLATFORM_LANDINGS.map((p) => `/${p.slug}`)];
 
+  const out: MetadataRoute.Sitemap = [];
   for (const path of paths) {
     for (const lang of LOCALES) {
-      const languages: Record<string, string> = {};
-      for (const l of LOCALES) languages[LOCALE_HTML_LANG[l]] = `${SITE_URL}/${l}${path}`;
       out.push({
         url: `${SITE_URL}/${lang}${path}`,
         lastModified: now,
-        changeFrequency: path === "" ? "weekly" : "monthly",
-        priority: path === "" ? 1 : path.startsWith("/history") ? 0.3 : 0.8,
-        alternates: { languages },
       });
     }
   }
-
   return out;
 }
